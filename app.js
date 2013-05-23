@@ -4,14 +4,16 @@
  */
 
 var express = require('express')
+  , app = express()
   , routes = require('./routes')
   , http = require('http')
-  , path = require('path');
-
-var app = express();
+  , path = require('path')
+  , server = http.createServer(app)
+  , socketio = require('socket.io').listen(server)
+  , sockets = require('./lib/socket');
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 7887);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
@@ -28,6 +30,12 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+socketio.set('log level', 1);
+
+socketio.sockets.on('connection', function(socket){
+    sockets.socketIO(socket);
 });
