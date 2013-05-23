@@ -1,7 +1,7 @@
 
 (function(){
 
-    var socket = io.connect('http://localhost:7887');
+    var socket = io.connect('http://bistumap.dmdgeeker.com');
 
     socket.on('news', function (data) {
         console.log(data);
