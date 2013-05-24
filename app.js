@@ -10,7 +10,7 @@ var express = require('express')
   , path = require('path')
   , server = http.createServer(app)
   , socketio = require('socket.io').listen(server)
-  , sockets = require('./lib/socket');
+  , userId = 0;
 
 // all environments
 app.set('port', process.env.PORT || 7887);
@@ -37,14 +37,14 @@ server.listen(app.get('port'), function(){
 socketio.set('log level', 1);
 
 socketio.sockets.on('connection', function(socket){
-    socket.emit('id', setId()());
-    sockets.socketIO(socket);
+    socket.emit('id', setId());
+    socket.on('update', function(data){
+        console.log("callback: " + data.toString());
+        socket.broadcast.emit('callback', "Hello, Allen.");
+    });
 });
 
 function setId(){
-  var _id = 0;
-  return function(){
-    return _id++;
-  };
+  return userId++;
 }
 
