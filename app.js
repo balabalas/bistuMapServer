@@ -37,5 +37,14 @@ server.listen(app.get('port'), function(){
 socketio.set('log level', 1);
 
 socketio.sockets.on('connection', function(socket){
+    socket.emit('id', setId()());
     sockets.socketIO(socket);
 });
+
+function setId(){
+  var _id = 0;
+  return function(){
+    return _id++;
+  };
+}
+
