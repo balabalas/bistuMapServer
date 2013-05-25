@@ -40,7 +40,7 @@ socketio.sockets.on('connection', function(socket){
     socket.emit('id', setId());
     socket.on('update', function(data){
         console.log("callback: " + data.toString());
-        socket.broadcast.emit('callback', "Hello, Allen.");
+        socket.broadcast.emit('callback', data);
     });
 });
 
