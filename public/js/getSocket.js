@@ -1,11 +1,11 @@
 
 (function(){
 
-    var socket = io.connect('http://localhost:7887');
+    var socket = io.connect('http://dmdgeeker.com:7887');
 
     socket.on('id', function (data) {
         console.log(data);
-        socket.emit('callback', { my: 'Hello, everyone. this is allen.' });
+        socket.emit('update', "Hello, this is web.");
     });
 
 })();
